@@ -7,8 +7,10 @@ app.use(express.json());
 app.use(express.static(`${__dirname}/public`));
 
 // routes
-app.post('/', contoller.expression);
-// app.get('/', contoller.readExpression);
+app.post('/signup', contoller.signup);
+app.post('/login', contoller.login);
+app.post('/form', contoller.expression);
+app.get('/forms', contoller.protect, contoller.readExpression);
 
 // Unhandlled routes
 app.all('*', (req, res) => {
