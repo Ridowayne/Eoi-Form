@@ -1,5 +1,4 @@
 .prettierrc
 config.env
 node_modules
-package.json
 package-lock.json
