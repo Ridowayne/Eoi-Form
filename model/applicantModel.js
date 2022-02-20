@@ -94,8 +94,20 @@ const applicantSchema = new mongoose.Schema({
     required: [true, 'kindly signify that you aware'],
     enum: ['Yes, I understand', 'No'],
   },
+  formHandled: {
+    type: Boolean,
+    defaulty: false,
+  },
+  adminComents: {
+    type: String,
+  },
 });
 
+applicantSchema.pre('save', function (next) {
+  if (this.isModified('adminComents')) return next;
+
+  this.formHandled = true;
+});
 // Model for application form
 const Applicant = new mongoose.model('Applicant', applicantSchema);
 
