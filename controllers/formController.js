@@ -47,6 +47,17 @@ exports.readExpression = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.comment = catchAsync(async (req, res, next) => {
+  const noteOnForm = await Applicant.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+});
+
 // getting one form
 exports.getForm = catchAsync(async (req, res, next) => {
   const oneForm = await Applicant.findById(req.params.id);
