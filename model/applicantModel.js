@@ -108,7 +108,8 @@ applicantSchema.pre('save', function (next) {
 
   this.formHandled = true;
 });
+
 // Model for application form
-const Applicant = new mongoose.model('Applicant', applicantSchema);
+const Applicant = mongoose.model('Applicant', applicantSchema);
 
 module.exports = Applicant;

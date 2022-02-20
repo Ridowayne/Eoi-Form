@@ -1,7 +1,25 @@
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const Applicant = require('./../model/applicantModel');
+const APIFeatures = require('../utils/apiFeatures');
 
+exports.getAllforms = catchAsync(async (req, res, next) => {
+  const features = new APIFeatures(Applicant.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  const forms = await features.query;
+
+  // SEND RESPONSE
+  res.status(200).json({
+    status: 'success',
+    results: forms.length,
+    data: {
+      forms,
+    },
+  });
+});
 // controller for filling expression form
 exports.expression = catchAsync(async (req, res) => {
   const form = await Applicant.create(req.body);
@@ -29,9 +47,25 @@ exports.readExpression = catchAsync(async (req, res, next) => {
   });
 });
 
+// getting one form
+exports.getForm = catchAsync(async (req, res, next) => {
+  const oneForm = await Applicant.findById(req.params.id);
+
+  if (!oneForm) {
+    return next(new AppError('There is no form with such ID', 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      oneForm,
+    },
+  });
+});
+
 //  sorting forms based on their skill
 exports.formBySkill = catchAsync(async (req, res, next) => {
-  const skills = await Applicant.find({ skill: req.body });
+  const skills = await Applicant.find({ skill: req.params.body });
 
   if (!skills) {
     return next(new AppError(' There are no forms with this skill yet', 404));

@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 const catchAsync = require('../utils/catchAsync');
 
 const User = require('../model/userModel');
@@ -108,3 +109,15 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = freshUser;
   next();
 });
+
+exports.restrictTo = (...roles) => {
+  return catchAsync(async (req, res, next) => {
+    // roles ['admin']
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('You do not have Permission to perform this task', 403)
+      );
+    }
+    next();
+  });
+};
