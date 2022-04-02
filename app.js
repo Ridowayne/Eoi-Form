@@ -31,7 +31,7 @@ app
   .get(
     '/forms',
     authContoller.protect,
-    // authContoller.restrictTo('admin'),
+
     formContoller.getAllforms
   )
   .patch(authContoller.protect, formContoller.comment);
