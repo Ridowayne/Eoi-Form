@@ -25,7 +25,7 @@ app.use(
 
 // routes
 app.get('/', (req, res) => {
-  res.status(200).send('welcome to the home page');
+  res.status(200).send('welcome to the home page of segsalerty');
 });
 app.post('/signup', authContoller.signup);
 app.post('/login', authContoller.login);
