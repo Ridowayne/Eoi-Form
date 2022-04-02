@@ -24,6 +24,9 @@ app.use(
 );
 
 // routes
+app.get('/', (req, res) => {
+  res.status(200).send('welcome to the home page');
+});
 app.post('/signup', authContoller.signup);
 app.post('/login', authContoller.login);
 app
